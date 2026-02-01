@@ -1,0 +1,11 @@
+name: CI
+on:
+  pull_request:
+  
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: repo file execution
+        run: python3 main.py
