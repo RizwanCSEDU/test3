@@ -2,11 +2,12 @@ package main
 
 import (
     "fmt"
+    "os"
     "time"
 )
 
 func main() {
-    fmt.Println("sleeping...")
+    fmt.Fprintln(os.Stderr, "sleeping...")
     time.Sleep(60 * time.Second)
-    fmt.Println("done")
+    fmt.Fprintln(os.Stderr, "done")
 }
