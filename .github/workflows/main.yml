@@ -1,11 +1,20 @@
-name: CI
+name: Examples Checks
 on:
   pull_request:
-  
+
 jobs:
-  linter:
+  validate-terraform:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: repo file execution
-        run: python3 main.py
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: '1.21'
+      - run: go build -o terraform-plugin-dir/terraform-provider-aws_v99.99.99_x5 .
+      - run: |
+          mkdir -p ~/.terraform.d/plugins/registry.terraform.io/hashicorp/aws/99.99.99/linux_amd64/
+          cp terraform-plugin-dir/terraform-provider-aws_v99.99.99_x5 ~/.terraform.d/plugins/registry.terraform.io/hashicorp/aws/99.99.99/linux_amd64/
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+      - run: cd examples/basic && terraform init && terraform validate
