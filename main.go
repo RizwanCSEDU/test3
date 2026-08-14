@@ -1,5 +1,7 @@
 package main
-import time
+
+import "time"
+
 func main() {
-  time.Sleep(60)
+    time.Sleep(60 * time.Second)
 }
